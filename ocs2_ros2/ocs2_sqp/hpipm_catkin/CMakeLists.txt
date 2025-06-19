@@ -39,6 +39,13 @@ set(BLASFEO_INCLUDE_DIR ${BLASFEO_PATH}/include CACHE STRING "Path to BLASFEO he
 set(BUILD_SHARED_LIBS ON CACHE STRING "Build shared libraries" FORCE)
 set(HPIPM_TESTING OFF CACHE BOOL "Examples enabled")
 
+# Set TARGET to GENERIC for ARM64 compatibility
+if(CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64" OR CMAKE_SYSTEM_PROCESSOR MATCHES "arm64")
+  set(TARGET "GENERIC" CACHE STRING "Set CPU architecture target" FORCE)
+else()
+  set(TARGET "AVX" CACHE STRING "Set CPU architecture target" FORCE)
+endif()
+
 # Download & build source
 FetchContent_Declare(hpipmDownload
   GIT_REPOSITORY https://github.com/giaf/hpipm
